@@ -1,0 +1,24 @@
+{% extends 'catalogue/base.html' %}
+{% block title %}
+Удалить объявление
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col card">
+            <div class="card-body d-flex flex-column align-items-center">
+                <h3 class="text-center mb-4">Удалить объявление</h3>
+                <h6 class="mb-3">Вы уверены, что хотите удалить объявление?</h6>
+                <form method="post" action="{% url 'delete_ad' ad.id %}">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" name="confirm" value="Подтвердить">
+                    <a class="btn btn-outline-primary" href="{% url 'ad' ad.id %}">Отменить</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

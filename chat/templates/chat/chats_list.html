@@ -1,0 +1,88 @@
+{% extends 'catalogue/base.html' %}
+{% load static %}
+{% block title %}
+Мои сообщения
+{% endblock %}
+
+{% block content %}
+
+{{ request.user.id|json_script:"user_id" }}
+{% with previous_messages|first as first_msg %}{{ first_msg.id|json_script:"first_message_id" }}{% endwith %}
+
+<div class="container">
+  <div class="row">
+    <div class="col col-10 mx-auto">
+      <div class="card mb-5">
+        <div class="card-header">
+          <div class="row">
+              <div class="col">
+                  <h4 class="text-center">Мои сообщения</h4>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <form method="GET">
+                <div class="row d-flex align-items-end mb-3">
+                  <div class="col-10">
+                    <div class="form-group mb-0">
+                        <label class="">{{ form.full_name.label }}</label>
+                        {{ form.full_name }}
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <button class="btn btn-primary" type="submit">Найти</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0 pb-0" id="conversations_list">
+          {% for conversation_data in conversations_data %}
+            <div class="row conversation" data-conversation-id="{{ conversation_data.conversation.id }}" id="{{conversation_data.conversation.id}}">
+              <div class="col">
+                <a href="{% url 'chat' conversation_data.conversation.id %}" class="text-dark" style="">
+                  <div class="row {% if not forloop.last %}border-bottom{% endif %} py-3">
+                    <div class="col-1">
+                      <img src="{{ conversation_data.recipient.profile_image.url }}"
+                           alt="Фото профиля" class="rounded-circle" style="object-fit: cover; width: 45px; height: 45px;">
+                    </div>
+
+                    <div class="col-9">
+                      <div class="row">
+                        <div class="col-11">
+                          <h5>{{ conversation_data.recipient.name }} {{ conversation_data.recipient.surname }}</h5>
+                        </div>
+                        <div class="unseen-messages col-1 d-flex align-items-start justify-content-end">
+                          {% if conversation_data.unseen_messages > 0 %}
+                            <span class="badge bg-danger rounded-pill float-end text-white">{{conversation_data.unseen_messages}}</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <p data-messageId="{{ conversation_data.last_message.id }}">{% if conversation_data.last_message.author == request.user %}<span class="font-weight-light">Вы: </span>{% endif %}{% if conversation_data.last_message.content %}{{ conversation_data.last_message.content }}{% elif conversation_data.last_message.media.all|length > 0 %}Изображение{% endif %}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                        <span class="messageDate">{{ conversation_data.last_message.created_at }}</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+          {% if conversations_data|length == 0 %}
+          <p class="mt-3 no-messages">У вас нет сообщений</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/chats_list.js' %}"></script>
+
+{% endblock %}

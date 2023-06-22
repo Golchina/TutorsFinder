@@ -1,0 +1,34 @@
+{% extends 'catalogue/base.html' %}
+{% block title %}
+{% if type == 'block' %}За{% else %}Раз{% endif %}блокировать пользователя
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col card">
+            <div class="card-body d-flex flex-column align-items-center">
+                {% if type == 'block' %}
+                    <h3 class="text-center mb-4">Заблокировать пользователя</h3>
+                    <h6 class="mb-3">Вы уверены, что хотите запретить пользователю {{ recipient.name }} {{ recipient.surname }} отправлять вам сообщения ?</h6>
+                    <form method="post" action="{% url 'block_user' recipient.id %}">
+                        {% csrf_token %}
+                        <input class="btn btn-danger" type="submit" name="confirm" value="Подтвердить">
+                        <a class="btn btn-outline-primary" href="{% url 'chats' %}">Отменить</a>
+                    </form>
+                {% else %}
+                    <h3 class="text-center mb-4">Разблокировать пользователя</h3>
+                    <h6 class="mb-3">Вы уверены, что хотите разрешить пользователю {{ recipient.name }} {{ recipient.surname }} отправлять вам сообщения ?</h6>
+                    <form method="post" action="{% url 'unblock_user' recipient.id %}">
+                        {% csrf_token %}
+                        <input class="btn btn-success" type="submit" name="confirm" value="Подтвердить">
+                        <a class="btn btn-outline-primary" href="{% url 'chats' %}">Отменить</a>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

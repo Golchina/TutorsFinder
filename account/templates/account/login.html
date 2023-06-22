@@ -1,0 +1,45 @@
+{% extends 'catalogue/base.html' %}
+
+{% block title %}
+Авторизация
+{% endblock %}
+{% block content %}
+<style>body {background-color: #f0f8ff;}</style>
+    <div class="container col-3 pt-3 pb-3 mb-3 rounded" style="background-color: white;">
+        <h2 class="text-center">Авторизация</h2>
+          {% for message in messages %}
+            <div class="alert alert-{{message.tags}}" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="">{{ form.email.label }}</label>
+                {{ form.email }}
+            </div>
+
+            <div class="form-group">
+                <label class="">{{ form.password.label }}</label>
+                {{ form.password }}
+            </div>
+            <div class="row mt-3">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <br>
+                        <p class="text-danger mx-3">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="row">
+                <button type="submit" class="mx-auto btn btn-primary">Войти</button>
+            </div>
+            <div class="row mt-2">
+                <a class="mx-auto" href="{% url 'register' %}">Зарегистрироваться</a>
+            </div>
+            <div class="row">
+                <a class="mx-auto" href="{% url 'reset_password' %}">Забыли пароль?</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

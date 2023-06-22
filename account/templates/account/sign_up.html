@@ -1,0 +1,66 @@
+{% extends 'catalogue/base.html' %}
+
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block content %}
+<style>body {background-color: #f0f8ff;}</style>
+<div class="container col-3 pt-3 pb-3 mb-3 rounded" style="background-color: white;">
+        <h2 class="text-center">Регистрация</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.surname.label }}</label>
+                {{ form.surname }}
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.birthday.label }}</label>
+                {{ form.birthday }}
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.gender.label }}</label>
+                {{ form.gender }}
+            </div>
+            <div class="form-group">
+                <label class="">Город</label>
+                {{ form.city }}
+                <datalist id="citylist">
+                    {% for city in cities %}
+                        <option value="{{ city }}"></option>
+                    {% endfor %}
+                </datalist>
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.email.label }}</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.password1.label }}</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.password2.label }}</label>
+                {{ form.password2 }}
+            </div>
+            <div class="row mt-3">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <br>
+                            <p class="text-danger mx-3">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+            </div>
+            <div class="row">
+                <button type="submit" class="mx-auto btn btn-primary">Зарегистрироваться</button>
+            </div>
+        </form>
+        <div class="row mt-2">
+            <a class="mx-auto" href="{% url 'login' %}">Войти</a>
+        </div>
+</div>
+{% endblock %}

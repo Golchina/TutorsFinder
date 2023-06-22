@@ -1,0 +1,112 @@
+{% extends 'catalogue/base.html' %}
+{% load static %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block content %}
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{% static 'images/mainTutors.png' %}" alt="Tutors main" width="600" height="550">
+      </div>
+      <div class=" col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">Мы поможем вам найти лучшего репетитора!</h1>
+        <p class="lead">Найти репетитора онлайн поможет каталог, в котором мы собрали всю важную информацию о преподавателях. Познакомьтесь с ними, прежде чем записатьcя на занятия — узнайте стаж работы, навыки, направление обучения и актуальную цену за урок. </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <a href="{% url 'catalogue' %}" type="button" class="btn btn-primary btn-lg px-4 me-md-2">Найти!</a>
+          <a href="{% url 'register' %}" class="btn btn-outline-secondary btn-lg px-4 ml-2">Зарегистрироваться</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      
+      <div class="col-lg-6">
+        <h1 class="text-center display-5 fw-bold lh-1 mb-3">Опытные специалисты!</h1>
+        <p class="text-center lead">Учитесь онлайн с лучшими преподавателями.</p>
+      </div>
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{% static 'images/specialist1.png' %}" alt="Tutors 1" width="600" height="600">
+      </div>
+    </div>
+  </div>
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{% static 'images/communication.png' %}" alt="Tutors 2" width="600" height="600">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="text-center display-5 fw-bold lh-1 mb-3">Безопасное общение!</h1>
+        <p class="text-center lead">Общайтесь без использования сторонних сервисов.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      
+      <div class="col-lg-6">
+        <h1 class="text-center display-5 fw-bold lh-1 mb-3">Гибкий график!</h1>
+        <p class="text-center lead">Занимайтесь в своём темпе, выбирая удобное время для занятий.</p>
+      </div>
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{% static 'images/Schedule1.png' %}" alt="Tutors 3" width="600" height="600">
+      </div>
+    </div>
+  </div>
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{% static 'images/price2.png' %}" alt="Tutors 4" width="600" height="600">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="text-center display-5 fw-bold lh-1 mb-3">Доступные цены!</h1>
+        <p class="text-center lead">На платформе вы найдёте репетитора на любой бюджет.</p>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2" class="active" aria-current="true"></button>
+        <button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="img-fluid" src="{% static 'images/Formula-pana.svg' %}" alt="Tutors1" width="700" height="500">
+            <p>Опытные репетиторы</p>
+        </div>
+        <div class="carousel-item">
+            <img class="img-fluid" src="{% static 'images/Formula-amico.svg' %}" alt="Tutors2" width="700" height="500">
+            <p>Безопасное общение</p>
+        </div>
+        <div class="carousel-item">
+            <img class="img-fluid" src="{% static 'images/Formula-bro.svg' %}" alt="Tutors3" width="700" height="500">
+            <p>Гибкий график</p>
+        </div>
+        <div class="carousel-item">
+            <img class="img-fluid" src="{% static 'images/Formula-rafiki.svg' %}" alt="Tutors4" width="700" height="500">
+            <p>Доступные цены</p>
+        </div>
+    </div>
+    <!-- Элементы управления -->
+    <a class="carousel-control-prev" href="#carousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Предыдущий</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Следующий</span>
+    </a>
+  </div> {% endcomment %}
+
+
+{% endblock %}

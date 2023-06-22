@@ -1,0 +1,26 @@
+{% extends 'catalogue/base.html' %}
+
+{% block title %}
+Пароль успешно изменён
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+        <div class="col">
+          <p>Восстановление пароля завершено<br>
+              Ваш пароль был сохранен. Теперь вы можете войти.
+          </p>
+          <a href="{% url 'login' %}">Войти</a>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+Восстановление пароля завершено
+Ваш пароль был сохранен. Теперь вы можете войти.
+
+Войти

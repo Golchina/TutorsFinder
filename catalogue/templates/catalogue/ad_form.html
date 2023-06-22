@@ -1,0 +1,73 @@
+{% extends 'catalogue/base.html' %}
+{% block title %}
+Объявление
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col card">
+            <div class="card-body">
+                <h3 class="text-center">Объявление</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="">{{ form.creator_role.label }}</label>
+                        {{ form.creator_role }}
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.title.label }}</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.description.label }}</label>
+                        {{ form.description }}
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.price.label }}</label>
+                        {{ form.price }}
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.experience.label }}</label>
+                        {{ form.experience }}
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.city.label }}</label>
+                        {{ form.city }}
+                        <datalist id="citylist">
+                            {% for city in cities %}
+                                <option value="{{ city }}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.subject.label }}</label>
+                        {{ form.media.css }}
+                        {{ form.subject }}
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        {{ form.media.js }}
+<!--                        <datalist id="subjectlist">-->
+<!--                            {% for subject in subjects %}-->
+<!--                                <option value="{{ subject }}"></option>-->
+<!--                            {% endfor %}-->
+<!--                        </datalist>-->
+                    </div>
+                    <div class="row mt-3">
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <br>
+                                    <p class="text-danger mx-3">{{ error }}</p>
+                                {% endfor %}
+                            {% endfor %}
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="mx-auto btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

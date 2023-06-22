@@ -1,0 +1,74 @@
+{% extends 'catalogue/base.html' %}
+{% load static %}
+{% block title %}
+Мои сообщения
+{% endblock %}
+
+{% block content %}
+
+{{ request.user.id|json_script:"user_id" }}
+{{ conversation_id|json_script:"conversation_id" }}
+
+<div class="container pb-5">
+
+<div class="row">
+  <div class="col-md-10 mx-auto">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <img src="{{ recipient.profile_image.url }}" alt="Фото профиля" class="rounded-circle" style="object-fit: cover; width: 50px; height: 50px;">
+        <div>
+          <a href="{% url 'profile' recipient.id %}"><h5 class="mb-0 ml-3">{{ recipient.name }} {{ recipient.surname }}</h5></a>
+        </div>
+        <div class="ml-auto d-flex flex-column align-items-end">
+          <a href="{% url 'delete_chat' conversation_id %}" class="text-muted">Удалить диалог</a>
+          {% if not is_blocker %}<a href="{% url 'block_user' recipient.id %}" class="text-muted">Заблокировать</a>{% else %}<a href="{% url 'unblock_user' recipient.id %}" class="text-muted">Разблокировать</a>{% endif %}
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <div class="message-table pt-3 pe-3" id="messages_list" style="position: relative; overflow-y:auto; height: 600px">
+                <!--       Здесь будут подгружаться сообщения через JS        -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        {% if not is_blocked and not is_blocker %}
+          <form id="message-form" enctype="multipart/form-data">
+            <div class="text-muted d-flex justify-content-start align-items-center pe-3 mt-2">
+                <input type="text" class="form-control form-control-lg" id="message_input"
+                  placeholder="Введите сообщение">
+                <i id="emoji-btn" style="font-size: 1.5em" class="ml-3 fa-regular fa-face-smile"></i>
+                <div id="emoji-popup" style="display:none;position:absolute;bottom:50px;right:10px;background-color:#fff;border:1px solid #ccc;padding:5px;">
+                  <div style="overflow:auto;max-height:200px;"></div>
+                </div>
+                <div class="image-upload mx-3 my-0" style="font-size: 1.5em">
+                  <label for="image-input" class="mb-0">
+                    <i class="fa fa-image"></i>
+                  </label>
+                  <input type="file" id="image-input" accept="image/*" multiple style="display: none">
+                </div>
+                <button style="margin: 0; padding: 0; border: 0; outline: none; background-color: transparent;" class="text-primary" type="submit" id="send_message"><i class="fa fa-paper-plane" aria-hidden="true" style="font-size: 1.5em"></i></button>
+            </div>
+          </form>
+        {% elif is_blocked %}
+          <div class="row">
+            <div class="col">Пользователь запретил отправлять ему сообщения</div>
+          </div>
+        {% else %}
+          <div class="row">
+            <div class="col">Вы запретили пользователю отправлять вам сообщения</div>
+          </div>
+        {% endif %}
+        <div id="image-preview" class="mt-2 d-flex"></div>
+      </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script src="{% static 'js/chat.js' %}"></script>
+
+{% endblock %}

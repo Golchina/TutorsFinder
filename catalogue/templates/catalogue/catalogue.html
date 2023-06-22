@@ -1,0 +1,128 @@
+{% extends 'catalogue/base.html' %}
+{% load static %}
+{% block title %}
+Каталог объявлений
+{% endblock %}
+
+{% block content %}
+
+<style>body {background-color: #f0f8ff;}</style>
+
+<div class="container">
+    <div class="main-body">
+      <div class="row gutters-sm mb-2">
+        <div class="col-sm-12 mb-6">
+          <div class="card h-100">
+            <div class="card-body">
+              <form method="GET">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="text-center">Каталог объявлений</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5>Параметры фильтрации</h5>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                        <label class="">{{ form.creator_role.label }}</label>
+                        {{ form.creator_role }}
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.city.label }}</label>
+                        {{ form.city }}
+                        <datalist id="citylist">
+                            {% for city in cities %}
+                                <option value="{{ city }}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.sort_by.label }}</label>
+                        {{ form.sort_by }}
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                        <label class="">{{ form.subject.label }}</label>
+                        {{ form.subject }}
+                        <datalist id="subjectlist">
+                            {% for subject in subjects %}
+                                <option value="{{ subject }}"></option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group">
+                        <label class="">{{ form.gender.label }}</label>
+                        {{ form.gender }}
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Фильтровать</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row gutters-sm mb-3">
+        <div class="col-sm-12 mb-6">
+          <div class="card h-100">
+            <div class="card-body">
+              {% if ads|length %}
+                {% for ad in ads %}
+                    {% include 'catalogue/ad_small_card.html' %}
+                {% endfor %}
+
+                <!--       Пагинация         -->
+                {% if ads.paginator.page_range|length > 1 %}
+                <div class="row">
+                  <div class="col">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      {% if ads.has_previous %}
+                        <li class="page-item">
+                          <a class="page-link" href="?page={{ ads.previous_page_number }}{% for param, value in request.GET.items %}{% if param != 'page' %}&{{param}}={{value}}{% endif %}{% endfor %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                        </li>
+                      {% endif %}
+                      {% for n in ads.paginator.page_range %}
+                          {% if ads.number == n %}
+                              <li class="page-item disabled">
+                              <span class="page-link font-weight-bold">{{ n }}<span class="sr-only"></span></span>
+                              </li>
+                          {% elif n > ads.number|add:'-3' and n < ads.number|add:'3' %}
+                              <li class="page-item"><a class="page-link" href="?page={{ n }}{% for param, value in request.GET.items %}{% if param != 'page' %}&{{param}}={{value}}{% endif %}{% endfor %}">{{ n }}</a></li>
+                          {% endif %}
+                      {% endfor %}
+                      {% if ads.has_next %}
+                        <li class="page-item">
+                          <a class="page-link" href="?page={{ ads.next_page_number }}{% for param, value in request.GET.items %}{% if param != 'page' %}&{{param}}={{value}}{% endif %}{% endfor %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </nav>
+                  </div>
+                </div>
+                {% endif %}
+              {% else %}
+                <p class="mb-0">Объявления с заданными параметрами не найдены</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}

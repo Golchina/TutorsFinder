@@ -1,0 +1,23 @@
+/* Change the width and height of the scrollbar track */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Change the color of the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+/* Change the color and style of the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 5px;
+}
+
+.delete-message:hover {
+  cursor: pointer;
+}
+.confirm-delete, .cancel-delete {
+  display: none;
+}

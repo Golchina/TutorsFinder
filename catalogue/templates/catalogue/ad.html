@@ -1,0 +1,59 @@
+{% extends 'catalogue/base.html' %}
+{% block title %}
+Объявление | {{ ad.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header d-flex align-items-center flex-column flex-md-row p-4">
+                    <div class="">
+                        <img src="{{ ad.creator.profile_image.url }}" alt="Фото профиля" class="rounded-circle" style="object-fit: cover; width: 150px; height: 150px;">
+                    </div>
+                    <div class="mt-md-0 mt-3 ml-4">
+                        <a href="{% url 'profile' ad.creator.id %}"><h5>{{ ad.creator.name }} {{ ad.creator.surname }}</h5></a>
+                        <h6 class="mb-0 text-secondary">Возраст: {{ creator_age }}</h6>
+                    </div>
+                    {% if user.id != ad.creator.id %}
+                    <div class="ml-md-auto mt-md-0 mt-3">
+                        <a href="{% url 'create_or_join_chat' ad.creator.id  %}" class="btn btn-primary">Написать сообщение</a>
+                    </div>
+                    {% else %}
+                    <div class="ml-md-auto mt-md-0 mt-3">
+                        <a href="{% url 'edit_ad' ad.id %}" class="btn btn-primary">Редактировать</a>
+                        <a href="{% url 'delete_ad' ad.id %}" class="btn btn-outline-danger">Удалить</a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col col-9">
+                            <h5 class="card-title">{{ ad.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Я {{ad.get_creator_role_display|lower}}{% if ad.creator.gender %} ({{ ad.creator.get_gender_display|first }}){% endif %}{% if ad.subject.all %} | {% for subj in ad.subject.all %}{{ subj.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if ad.city %} | г. {{ad.city}}{% endif %}{% if ad.experience %} | опыт: {{ ad.experience }}{% endif %}</h6>
+                        </div>
+                        <div class="col col-3 d-flex align-items-center justify-content-center">
+                            <h5 class="mb-0">{% if ad.price %}{{ ad.price }} руб./час{% else %}Цена договорная{% endif %}</h5>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text">{{ ad.description }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col text-right text-muted">
+                        <p>{{ ad.created_at }}</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

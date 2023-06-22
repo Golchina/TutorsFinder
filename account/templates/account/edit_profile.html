@@ -1,0 +1,52 @@
+{% extends 'catalogue/base.html' %}
+{% block title %}
+Редактирование профиля
+{% endblock %}
+{% block content %}
+<style>body {background-color: #f0f8ff;}</style>
+<div class="container col-3 pt-3 pb-3 mb-3 rounded" style="background-color: white;">
+        <h3 class="text-center">Редактирование профиля</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="">{{ form.profile_image.label }}</label>
+                <div class="form-control">{{ form.profile_image }}</div>
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.surname.label }}</label>
+                {{ form.surname }}
+            </div>
+            <div class="form-group">
+                <label class="">{{ form.birthday.label }}</label>
+                {{ form.birthday }}
+            </div>
+            <div class="form-group">
+                <label class="">Город</label>
+                {{ form.city }}
+                <datalist id="citylist">
+                    {% for city in cities %}
+                        <option value="{{ city }}"></option>
+                    {% endfor %}
+                </datalist>
+            </div>
+            <div class="form-group">
+                <a href="{% url 'change_password' %}" class="text-link">Изменить пароль</a>
+            </div>
+            <div class="row mt-3">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <br>
+                            <p class="text-danger mx-3">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+            </div>
+            <div class="row">
+                <button type="submit" class="mx-auto btn btn-primary">Сохранить</button>
+            </div>
+        </form>
+</div>
+{% endblock %}
